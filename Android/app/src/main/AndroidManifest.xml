@@ -16,6 +16,15 @@
         android:theme="@style/Theme.Sim"
         tools:targetApi="31">
         <activity
+            android:name=".CreateCategory"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
