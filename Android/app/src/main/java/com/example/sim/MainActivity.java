@@ -27,8 +27,8 @@ import retrofit2.Response;
 
 public class MainActivity extends BaseActivity {
 
-    CategoriesAdapter adapter;
-    RecyclerView rc;
+    private CategoriesAdapter adapter;
+    private RecyclerView rc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

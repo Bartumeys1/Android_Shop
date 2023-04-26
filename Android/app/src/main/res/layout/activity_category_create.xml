@@ -8,7 +8,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
     tools:context=".category.CategoryCreateActivity">
 
     <Button
@@ -27,6 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        app:helperText="Required"
+        app:helperTextTextColor="@android:color/holo_red_dark"
         app:layout_constraintTop_toBottomOf="@id/btn_Category_Add"
         android:hint="Ім'я"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -93,13 +96,5 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_SelectFoto" />
-
-    <com.oginotihiro.cropview.CropView
-        android:id="@+id/cropView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="MissingClass"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="20dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -14,5 +14,5 @@ public interface CategoriesApi {
     @GET("/api/categories/list")
     public Call<List<CategoryItemDTO>> list();
     @POST("api/categories/create")
-    public Call<CategoryCreateDTO>addCategory(@Body CategoryCreateDTO category);
+    public Call<Void>addCategory(@Body CategoryCreateDTO category);
 }
