@@ -47,15 +47,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        app:helperText="Required"
+        app:helperTextTextColor="@android:color/holo_red_dark"
+        app:errorEnabled="true"
         app:layout_constraintTop_toBottomOf="@id/name_textField"
         android:hint="Пріорітет"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/text_Priority"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            />
+            android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -64,6 +67,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:hint="Опис"
+        app:helperText="Required"
+        app:helperTextTextColor="@android:color/holo_red_dark"
+        app:errorEnabled="true"
         app:layout_constraintTop_toBottomOf="@id/priority_textField"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -91,7 +97,7 @@
     <ImageView
         android:id="@+id/my_avatar"
         android:layout_width="wrap_content"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -6,15 +6,19 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.sim.BaseActivity;
 import com.example.sim.ChangeImageActivity;
 import com.example.sim.MainActivity;
 import com.example.sim.R;
+import com.example.sim.application.HomeApplication;
 import com.example.sim.dto.category.CategoryCreateDTO;
 import com.example.sim.dto.category.CategoryItemDTO;
 import com.example.sim.service.CategoryNetwork;
@@ -34,11 +38,11 @@ public class CategoryCreateActivity extends BaseActivity {
 
     public static int SELECT_IMAGE_RESULT = 300;
     private ImageView avatar_image;
-    private CategoryCreateDTO categoryTest=null;
     private Uri selectCropImage ;
     private TextInputLayout name_TextLayout;
     private TextInputLayout priority_TextLayout;
     private TextInputLayout desc_TextLayout;
+    private CategoryCreateDTO categoryTest=null;
 
     // Activityies
     Intent mainActivity;
@@ -55,17 +59,22 @@ public class CategoryCreateActivity extends BaseActivity {
         priority_TextLayout = findViewById(R.id.priority_textField);
         desc_TextLayout = findViewById(R.id.description_textField);
 
+
         //Додаванна Активіті на яку перейду
         mainActivity = new Intent(this, MainActivity.class);
         mainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-        TextInputLayout arr[] = {name_TextLayout,name_TextLayout,name_TextLayout,};
+        validationTextField(name_TextLayout);
+        validationTextField(priority_TextLayout);
+        validationTextField(desc_TextLayout);
 
 
         //Додати категорію
         addCategory_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!validation())
+                    return;
                 System.out.println("-----Відправка данних на сервер. Створення нової Категорії");
                 categoryTest = new CategoryCreateDTO();
 
@@ -148,6 +157,59 @@ public class CategoryCreateActivity extends BaseActivity {
             return null;
         }
     }
-}
 
-//TODO: Added Validation fields and click Button "Додати"
+    private void validationTextField(TextInputLayout input) {
+        input.setHelperText("");
+        input.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String name = input.getEditText().getText().toString();
+                if(name.isEmpty()) {
+                    input.setError("Поле не повинно бути пустим");
+                }
+                else {
+                    input.setError("");
+                    input.setHelperText("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+    private boolean validation() {
+        boolean isValid=true;
+        String name = name_TextLayout.getEditText().getText().toString();
+        int priority =0;
+        if (!priority_TextLayout.getEditText().getText().toString().isEmpty())
+           priority = Integer.parseInt(priority_TextLayout.getEditText().getText().toString());
+        String description = desc_TextLayout.getEditText().getText().toString();
+
+        if(name.isEmpty() || priority<= 0 ||
+                description.isEmpty() || selectCropImage == null)
+            isValid = false;
+        if(name.isEmpty()) {
+            name_TextLayout.setError("Вкажіть назву");
+            isValid=false;
+        } else if (priority<= 0) {
+            priority_TextLayout.setError("Пріоритет має бути вище 0");
+            isValid=false;
+        }else if (description.isEmpty()) {
+            desc_TextLayout.setError("Вкажіть опис");
+            isValid=false;
+        }
+        else if (selectCropImage == null) {
+            Toast.makeText(this,"Оберіть фотографію!",Toast.LENGTH_LONG).show();
+            isValid=false;
+        }
+
+        return isValid;
+    }
+}
