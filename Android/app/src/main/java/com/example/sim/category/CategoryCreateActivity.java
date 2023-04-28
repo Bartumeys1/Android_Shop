@@ -59,6 +59,7 @@ public class CategoryCreateActivity extends BaseActivity {
         mainActivity = new Intent(this, MainActivity.class);
         mainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
+        TextInputLayout arr[] = {name_TextLayout,name_TextLayout,name_TextLayout,};
 
 
         //Додати категорію
@@ -148,3 +149,5 @@ public class CategoryCreateActivity extends BaseActivity {
         }
     }
 }
+
+//TODO: Added Validation fields and click Button "Додати"

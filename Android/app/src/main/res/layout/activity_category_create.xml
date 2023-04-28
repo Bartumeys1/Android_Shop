@@ -30,6 +30,7 @@
         android:layout_marginTop="10dp"
         app:helperText="Required"
         app:helperTextTextColor="@android:color/holo_red_dark"
+        app:errorEnabled="true"
         app:layout_constraintTop_toBottomOf="@id/btn_Category_Add"
         android:hint="Ім'я"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">

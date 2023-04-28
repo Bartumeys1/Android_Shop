@@ -19,9 +19,15 @@ import java.util.List;
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoryCartViweHolder> {
 
     private List<CategoryItemDTO> categories;
+    private final OnItemClickListener editListener;
+    private final OnItemClickListener deleteListener;
 
-    public CategoriesAdapter(List<CategoryItemDTO> categories) {
+    public CategoriesAdapter(List<CategoryItemDTO> categories,
+                             OnItemClickListener editListener,
+                             OnItemClickListener deleteListener) {
         this.categories = categories;
+        this.editListener = editListener;
+        this.deleteListener = deleteListener;
     }
 
     @NonNull
@@ -46,6 +52,21 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoryCartViweHold
                     .load(url)
                     .apply(new RequestOptions().override(600))
                     .into(holder.getCategoryImage());
+
+            //Edit Listener
+            holder.getEditBtn().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    editListener.onItemClick(item);
+                }
+            });
+            //Delete Listener
+            holder.getDeleteBtn().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    deleteListener.onItemClick(item);
+                }
+            });
         }
     }
 

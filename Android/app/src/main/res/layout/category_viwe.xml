@@ -37,6 +37,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/categoryImage"
+            app:layout_constraintBottom_toTopOf="@+id/buttonsLayout"
+            android:layout_marginBottom="10dp"
             >
             <TextView
                 android:id="@+id/categoryName"
@@ -47,6 +49,29 @@
                 android:text="Пошта"
                 android:textSize="18dp"
                 />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buttonsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/editBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Редагувати" />
+
+            <Button
+                android:id="@+id/deleteBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Видалити" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
