@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Sim"
         tools:targetApi="31">
         <activity
+            android:name=".modals.DeleteConfirmation"
+            android:exported="false" />
+        <activity
             android:name=".category.CategoryUpdateActivity"
             android:exported="false" />
         <activity

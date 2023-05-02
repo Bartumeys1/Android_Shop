@@ -17,6 +17,7 @@ import com.example.sim.application.HomeApplication;
 import com.example.sim.category.CategoriesAdapter;
 import com.example.sim.category.CategoryUpdateActivity;
 import com.example.sim.dto.category.CategoryItemDTO;
+import com.example.sim.modals.DeleteConfirmation;
 import com.example.sim.service.CategoryNetwork;
 import com.example.sim.utils.CommonUtils;
 
@@ -102,12 +103,15 @@ public class MainActivity extends BaseActivity {
 
     private void onClickByItemDelete(CategoryItemDTO item){
 
-        Toast.makeText(HomeApplication.getAppContext(),"Delete item Id: "+item.getId(),Toast.LENGTH_LONG).show();
-        //TODO: Доробити сторінку для підтвердження і видалення категорії
+        //Toast.makeText(HomeApplication.getAppContext(),"Delete item Id: "+item.getId(),Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, DeleteConfirmation.class);
+        intent.putExtra("itemId", item.getId());
+        intent.putExtra("name", item.getName());
+        startActivity(intent);
+        finish();
     }
     private void onClickByItemEdit(CategoryItemDTO item){
-        Toast.makeText(HomeApplication.getAppContext(),"Edit item name: ",Toast.LENGTH_LONG).show();
-
+        //Toast.makeText(HomeApplication.getAppContext(),"Edit item name: ",Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, CategoryUpdateActivity.class);
         intent.putExtra("itemId", item.getId());
         startActivity(intent);
