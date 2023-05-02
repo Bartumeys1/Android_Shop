@@ -22,6 +22,7 @@ import com.example.sim.application.HomeApplication;
 import com.example.sim.dto.category.CategoryCreateDTO;
 import com.example.sim.dto.category.CategoryItemDTO;
 import com.example.sim.service.CategoryNetwork;
+import com.example.sim.utils.CommonUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.oginotihiro.cropview.CropView;
@@ -64,9 +65,8 @@ public class CategoryCreateActivity extends BaseActivity {
         mainActivity = new Intent(this, MainActivity.class);
         mainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-        validationTextField(name_TextLayout);
-        validationTextField(priority_TextLayout);
-        validationTextField(desc_TextLayout);
+        //Validation fields
+        setupError();
 
 
         //Додати категорію
@@ -83,7 +83,6 @@ public class CategoryCreateActivity extends BaseActivity {
                 categoryTest.setImageBase64(uriGetBase64(selectCropImage));
                 categoryTest.setPriority(Integer.parseInt(priority_TextLayout.getEditText().getText().toString()));
                 categoryTest.setDescription(desc_TextLayout.getEditText().getText().toString());
-
                 requestServer(categoryTest);
             }
         });
@@ -108,6 +107,7 @@ public class CategoryCreateActivity extends BaseActivity {
     }
 
     void requestServer(CategoryCreateDTO model) {
+        CommonUtils.showLoading();
         CategoryNetwork
                 .getInstance()
                 .getJsonApi()
@@ -120,6 +120,7 @@ public class CategoryCreateActivity extends BaseActivity {
                             System.out.println("----Category Added successfuly");
                             startActivity(mainActivity);
                             finish();
+                            CommonUtils.hideLoading();
                         }
                         else{
                             System.out.println("Server erroe");
@@ -129,7 +130,7 @@ public class CategoryCreateActivity extends BaseActivity {
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
                         System.out.println("----Category added Error");
-
+                        CommonUtils.hideLoading();
                     }
                 });
     }
@@ -158,23 +159,67 @@ public class CategoryCreateActivity extends BaseActivity {
         }
     }
 
-    private void validationTextField(TextInputLayout input) {
-        input.setHelperText("");
-        input.getEditText().addTextChangedListener(new TextWatcher() {
+    private void setupError() {
+        name_TextLayout.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String name = input.getEditText().getText().toString();
-                if(name.isEmpty()) {
-                    input.setError("Поле не повинно бути пустим");
+            public void onTextChanged(CharSequence text, int i, int i1, int i2) {
+                if (text.length() <= 2) {
+                    name_TextLayout.setError(getString(R.string.category_name_required));
+                } else {
+                    name_TextLayout.setError("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        priority_TextLayout.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence text, int i, int i1, int i2) {
+                int number = 0;
+                try {
+                    number = Integer.parseInt(text.toString());
+                } catch (Exception ex) {
+                }
+                if (number <= 0) {
+                    priority_TextLayout.setError(getString(R.string.category_priority_required));
                 }
                 else {
-                    input.setError("");
-                    input.setHelperText("");
+                    priority_TextLayout.setError("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        desc_TextLayout.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence text, int i, int i1, int i2) {
+                if (text.length() <= 2) {
+                    desc_TextLayout.setError(getString(R.string.category_description_required));
+                } else {
+                    desc_TextLayout.setError("");
                 }
             }
 
@@ -195,18 +240,18 @@ public class CategoryCreateActivity extends BaseActivity {
         if(name.isEmpty() || priority<= 0 ||
                 description.isEmpty() || selectCropImage == null)
             isValid = false;
-        if(name.isEmpty()) {
-            name_TextLayout.setError("Вкажіть назву");
+        if(name.isEmpty() || name.length()<=2) {
+            name_TextLayout.setError(getString(R.string.category_name_required));
             isValid=false;
         } else if (priority<= 0) {
-            priority_TextLayout.setError("Пріоритет має бути вище 0");
+            priority_TextLayout.setError(getString(R.string.category_priority_required));
             isValid=false;
         }else if (description.isEmpty()) {
-            desc_TextLayout.setError("Вкажіть опис");
+            desc_TextLayout.setError(getString(R.string.category_description_required));
             isValid=false;
         }
         else if (selectCropImage == null) {
-            Toast.makeText(this,"Оберіть фотографію!",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.foto_required),Toast.LENGTH_LONG).show();
             isValid=false;
         }
 
