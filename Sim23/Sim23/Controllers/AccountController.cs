@@ -37,7 +37,7 @@ namespace Sim23.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromForm] RegisterUserViewModel model)
+        public async Task<IActionResult> Register([FromBody] RegisterUserViewModel model)
         {
 
             string imageName = string.Empty;
