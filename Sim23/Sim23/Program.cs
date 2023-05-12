@@ -59,8 +59,12 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 
 builder.Services.AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Program>());
+
 //Add AutoMapper
-builder.Services.AddAutoMapper(typeof(AppMapProfile));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
+
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -95,7 +99,7 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/images"
 });
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
