@@ -4,8 +4,7 @@ public class ProfileDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private String photo;
-    private String password;
+    private String imageBase64;
 
     public String getFirstName() {
         return firstName;
@@ -31,19 +30,11 @@ public class ProfileDTO {
         this.email = email;
     }
 
-    public String getPhoto() {
-        return photo;
+    public String getImageBase64() {
+        return imageBase64;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setImageBase64(String imageBase64) {
+        this.imageBase64 = imageBase64;
     }
 }

@@ -81,7 +81,6 @@ public class BaseActivity extends AppCompatActivity {
                 return true;
             case R.id.m_profile:
                 try {
-                    HomeApplication.getInstance().deleteToken();
                     intent = new Intent(BaseActivity.this, ProfileActivity.class);
                     startActivity(intent);
                     finish();
